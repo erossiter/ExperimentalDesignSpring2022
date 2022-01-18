@@ -25,8 +25,9 @@ assignment <- declare_assignment(Z = complete_ra(N, prob = .5))
 reveal_Y <- declare_reveal() # the switching equation
 
 estimator <- declare_estimator(Y ~ Z,
-                               model = estimatr::difference_in_means,
+                               model = lm, #estimatr::difference_in_means
                                inquiry = "ATE")
+
 
 design1 <- population + potential_outcomes + estimand + assignment + reveal_Y + estimator
 
@@ -71,7 +72,7 @@ mean(single_draw$Y_Z_1 - single_draw$Y_Z_0)
 estimator(single_draw)
 estimator(single_draw)$estimate #estimate
 estimand(single_draw) #estimand
-# Our estimate is off by about .8
+# Our estimate is off only by about .03 !!! 
 # We're trying our best to calculate the true ATE, but we're only guaranteed that
 # *in expectation* our estimator is will get it right.  It's an unbiased estimator,
 # but we only get one experiment!
@@ -86,7 +87,13 @@ estimand(single_draw) #estimand
 # We can see how our experiment would turn out if we ran it a bunch of times
 diagnosands <- declare_diagnosands(mean_estimand = mean(estimand),
                                    mean_estimate = mean(estimate),
-                                   sd_estimate = sd(estimate))
+                                   sd_estimate = sd(estimate),
+                                   bias = mean(estimate - estimand))
 diagnosis <- diagnose_design(design1, diagnosands = diagnosands, sims = 1000, bootstrap_sims = 0)
 diagnosis
 hist(diagnosis$simulations_df$estimate)
+
+## For James and Peitong -----
+install.packages("Rcpp")
+library(Rcpp)
+sessionInfo() #we want version 1.0.7
