@@ -15,10 +15,10 @@ population <- declare_population(N = N,
                                  u_0 = rnorm(N)*control_sd,
                                  u_1 = rnorm(N)*treatment_sd)
 
-potential_outcomes <- declare_potential_outcomes(Y ~ Z * (u_1 + treatment_mean)
+potential_outcomes <- declare_potential_outcomes(Y ~ + Z * (u_1 + treatment_mean)
                                                      + (1 - Z) * (u_0 + control_mean))
 
-estimand <- declare_inquiry(ATE = mean(Y_Z_1) - mean(Y_Z_0))
+estimand <- declare_estimand(ATE = mean(Y_Z_1) - mean(Y_Z_0))
 
 assignment <- declare_assignment(Z = complete_ra(N, prob = .5))
 
@@ -60,7 +60,7 @@ single_est
 set.seed(1234) # make sure to run these lines so we're all working with the same data
 single_draw <- draw_data(design1)
 estimand(single_draw)
-
+mean(single_draw$Y_Z_1 - single_draw$Y_Z_0)
 
 # 3. As I said in #2, we create functions when we "declare" a step, so we can
 # calculate our estimate as well since we've added that step!
@@ -68,5 +68,25 @@ estimand(single_draw)
 # Task:
 # How close is the estimate to the estimand from our hypothetical experiment?
 # In your own words, why are these quantities not identical?
+estimator(single_draw)
+estimator(single_draw)$estimate #estimate
+estimand(single_draw) #estimand
+# Our estimate is off by about .8
+# We're trying our best to calculate the true ATE, but we're only guaranteed that
+# *in expectation* our estimator is will get it right.  It's an unbiased estimator,
+# but we only get one experiment!
 
+# --------------------------------
 
+# Extra, if time
+
+# Simulating the experiment
+
+# Simulating 1000 different worlds and random assignments
+# We can see how our experiment would turn out if we ran it a bunch of times
+diagnosands <- declare_diagnosands(mean_estimand = mean(estimand),
+                                   mean_estimate = mean(estimate),
+                                   sd_estimate = sd(estimate))
+diagnosis <- diagnose_design(design1, diagnosands = diagnosands, sims = 1000, bootstrap_sims = 0)
+diagnosis
+hist(diagnosis$simulations_df$estimate)
