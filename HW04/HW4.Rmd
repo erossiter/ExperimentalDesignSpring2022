@@ -1,0 +1,93 @@
+---
+title: "Homework 4"
+date: February 2, 2022
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- This homework is due Wednesday, February 9 at 3pm EST.
+- Submit via GitHub.  Remember to commit and push online so I can see it.
+- Please format your homework solutions using R Markdown.  You are welcome to simply add your answers below each question.
+  - If the question requires a figure, make sure you have informative title, axis labels, and legend if needed.
+  - Note: When I've given the framework of an answer's code, I've included the option `eval=FALSE` in the R chunk.  When you start filling in your answer, you'll need to switch this to `eval=TRUE`.
+- Turn in both the .rmd file and the knitted .pdf or .html file.
+  - Knitting the .rmd file to a .pdf or .html file should help ensure your code runs without errors, but double check the output is what you expected.
+
+## Question 1
+
+Conduct randomization inference hypothesis test of the sharp null hypothesis for the following data *by hand*.  It's an experiment that used complete randomization to assign 2 of 4 units to treatment.  The data from the experiment are stored in `df`.
+
+I've shown what the results are using the `conduct_ri` function.  Your task is to replicate these results.  Specifically, you should calculate the sampling distribution, plot it as a histogram, indicate where the observed estimate (our test-statistic) falls on the histogram, and report a two-tailed pvalue.
+
+Note: The number of possible random assignments isn't that big, so don't feel like you have to write a for loop for this question. You can if you want, of course.  I'm more concerned with you gaining an intuition for what's going on with randomization inference.
+
+```{r, fig.width=4, fig.height=4, fig.align='center'}
+df <- data.frame("Z" = c(0,0,1,1),
+                 "Y" = c(4,6,2,2))
+ra <- randomizr::declare_ra(N = 4, m = 2)
+ra
+out <- ri2::conduct_ri(formula = Y ~ Z,
+                       sharp_hypothesis = 0,
+                       data = df,
+                       declaration = ra,
+                       outcome = "Y",
+                       assignment = "Z")
+out
+plot(out)
+```
+
+
+## Question 2
+
+Below I've read in a dataset called `alo_star_men` included in the `estimatr` packate.  The data is from the following [paper](https://www.aeaweb.org/articles?id=10.1257/app.1.1.136):
+
+> Lin, Winston. 2013. "Agnostic notes on regression adjustments to experimental data: Reexamining Freedman’s critique." The Annals of Applied Statistics. Stat. 7(1): 295-318. doi:10.1214/12-AOAS583.
+
+Here is the abstract from the paper:
+
+> This paper reports on an experimental evaluation of strategies designed to improve academic performance among college freshmen. One treatment group was offered academic support services. Another was offered financial incentives for good grades. A third group combined both interventions. Service use was highest for women and for subjects in the combined group. The combined treatment also raised the grades and improved the academic standing of women. These differentials persisted through the end of second year, though incentives were given in the first year only. This suggests study skills among some treated women increased. In contrast, the program had no effect on men.
+
+According to the help file, "This data was originally taken from the following paper, subset to men who showed up to college, were in one of the arms with the support condition, and had GPA data for their first year in college."
+
+Reading the abstract and the dataset help file (`?alo_star_men`) should provide enough information to answer the following questions.  I'll add one clarification: treatment *was* randomized, and since I couldn't find a lot of detail in the paper, let's just assume they used complete randomization.
+
+Your task is to assess whether one important covariate--high school GPA--is balanced across the two experimental conditions.  
+
+```{r}
+library(estimatr)
+data(alo_star_men)
+head(alo_star_men)
+```
+
+### 2a
+
+Conduct a t-test to assess balance on this covariate and interpret the results.  Is this variable balanced?  Are you surprised by the results?  Why or why not?  
+
+### 2b
+
+Comment on why balance on high school GPA is critical to the causal inferences we draw from this study.
+
+
+### 2c
+
+Consider an experiment you've recently read in a class, and experiment you've conducted before, or an experiment you plan to conduct.  What is one variable you would want to check for imbalances to make sure that study's causal inferences can be attributed to the treatment?  Explain in a few sentences why balance on the variable you've identified is important.
+
+
+
+## Question 3
+
+Please write up your initial thoughts on your final paper. You can write in whatever text processor you prefer.  Email me the document if you'd prefer writing in something other than the .rmd file.
+
+Include, at a minimum, thoughts on the topic, the research question, and one or more hypotheses.  You might structure this one-pager by including one paragraph motivating the topic, one paragraph explaining your research question, and one paragraph motivating your hypotheses.  Please also formally write your hypotheses, for example, "H$_1$: Partisan media increases affective polarization."  I should be able to know the important concepts in your study and identify what is $X$ and what is $Y$.
+
+Keep in mind two things:
+
+1. The goal of the one-pager is to check in with where you're at.  Nothing is set in stone!
+2. This is your first opportunity for feedback on your idea, so if you want to include *more* than the topic, question, and hypotheses, please do.  For instance, if you have in mind the sample, the experimental conditions, etc. feel free to write it up.  
+
+
