@@ -62,7 +62,9 @@ diagnosis_ates
 # we use when assessing power in the above simulation?
 
         # The *rate at which* the estimate was deemed statistically significant
-        # Across all simulations mean(p value < .05)
+        # Across all simulations: mean(p value < .05)
+p_vals <- c(.02,.03, .001, .5)
+mean(p_vals < .05)
 
 # Question 3
 # In your own words, why is it important to have standard errors
