@@ -1,0 +1,69 @@
+---
+title: "Homework 5"
+date: February 9, 2022
+output: pdf_document
+---
+
+
+
+## Instructions
+
+- This homework is due Wednesday, February 16 at 3pm EST.
+- Submit via GitHub.  Remember to commit and push online so I can see it.
+- Please format your homework solutions using R Markdown.  You are welcome to simply add your answers below each question.
+  - If the question requires a figure, make sure you have informative title, axis labels, and legend if needed.
+  - Note: When I've given the framework of an answer's code, I've included the option `eval=FALSE` in the R chunk.  When you start filling in your answer, you'll need to switch this to `eval=TRUE`.
+- Turn in both the .rmd file and the knitted .pdf or .html file.
+  - Knitting the .rmd file to a .pdf or .html file should help ensure your code runs without errors, but double check the output is what you expected.
+  
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```  
+## Question 1
+
+This homework asks you to start thinking about how you would represent your research design in the MIDA framework.  Your tasks:
+
+- Fill in the following functions with a *first draft* of how you see an experimental design testing one of your hypotheses.
+- For each of the MIDA components, explain in at least a few sentences what you're doing and why you're doing it.
+- For each declaration, comment on if it somehow isn't representing your research design how you want it to yet.  Essentially, I want to see a list of "todo's" from you.  Some examples:
+  - You want three experimental conditions, but you've only coded up two so far.
+  - You want to use block randomization, but you've only coded up complete randomization so far.
+  - You want to measure your outcome as an index across five items, but you're only representing your outcome as a single item.
+
+```{r}
+#M - models of the world
+declare_population()
+declare_potential_outcomes()
+```
+
+```{r}
+#I - inquiry
+declare_inquiry()
+```
+
+```{r}
+#D - data strategy
+declare_assignment()
+declare_reveal()
+```
+
+```{r}
+#A - answer strategy
+declare_estimator()
+```
+
+## Question 2
+
+Even though your design will be incomplete and/or unrepresentative of what you envision for the final product, I want you to get in the habit of diagnosing it.  Using the `diagnose_design` function, diagnose your design and comment on the results.
+
+```{r}
+diagnose_design()
+```
+
+## Question 3
+
+Here, I want you to comment on two things:
+
+1. Do you have any specific questions for me?
+2. What do you see as your next steps for this project?
