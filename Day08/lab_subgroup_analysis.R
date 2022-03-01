@@ -81,22 +81,12 @@ diagnosis
 
 # (1) Explain why CATE_L is not powered but CATE_H is.
 
-# The effect amongst low educated people is small; hard to find signal through the noise.
-# Effect amongst high education people is larger; easier to find signal through the noise.
-
 # (2) Explain how the ATE relates to CATE_L and CATE_H.
-
-# Since 50% of sample in each group, ATE = (CATE_L + CATE_H)/2
 
 # (3) Interpret the interaction term in words.
 
-# The effect of the job training program is stronger people with more education 
-# relative to those with less.
-
 # (4) What would you do given these simulation results if you were
 #    most interested in the interaction term?  How might you readjust your design?
-
-# Bigger N; stronger treatment; something!
 
 
 # Redesign -----------------
