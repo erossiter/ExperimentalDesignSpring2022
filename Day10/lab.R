@@ -1,5 +1,9 @@
 library(DeclareDesign)
 
+
+# Code is based on this DeclareDesign discussion board thread:
+# https://discuss.declaredesign.org/t/how-to-write-the-itt-estimand-when-we-simulate-one-sided-non-compliance/155
+
 types <- c("Complier", "Never-Taker")
 proportion_compliers <- .75
 N <- 100
